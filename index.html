@@ -1,0 +1,74 @@
+ 
+<!DOCTYPE html> 
+<html lang="en"> 
+ 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Business Idea Evaluation App</title> 
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet"> 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
+      
+    <style>  
+    pre {  
+        white-space: pre-wrap;       /* Since CSS 2.1 */  
+        white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */  
+        white-space: -pre-wrap;      /* Opera 4-6 */  
+        white-space: -o-pre-wrap;    /* Opera 7 */  
+        word-wrap: break-word;       /* Internet Explorer 5.5+ */  
+    }  
+    </style>  
+</head> 
+ 
+<body class="bg-black text-white min-h-screen"> 
+    <div class="container mx-auto px-4 py-12"> 
+        <h1 class="text-4xl font-bold mb-4 text-center"> 
+            💵💵 Business Idea Breakdown 💵💵 
+ 
+        </h1> 
+        <h2 class="text-xl font-bold mb-4 text-center">From Idea to Action Plan in Seconds</h2> 
+        <ul class="list-disc px-8"> 
+            <li>Idea Submission</li> 
+            <li>Idea Breakdown</li> 
+            <li>Deep Analysis</li> 
+            <li>Strategic Plan</li> 
+        </ul> 
+        <form id="idea-form" class="space-y-4"> 
+            <label for="idea-description" class="block">Enter your Business Idea:</label> 
+            <textarea id="idea-description" rows="6" class="w-full bg-gray-700 p-2 rounded"></textarea> 
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 py-1 px-4 rounded"> 
+                💥 Idea Breakdown 💥 
+ 
+            </button> 
+            <p id="idea-status" class="text-center hidden">Breaking down like a mf...</p> 
+        </form> 
+ 
+        <form id="analysis-form" class="space-y-4 hidden mt-8"> 
+            <label for="idea-components" class="block">Idea Components (Edit if necessary):</label> 
+            <textarea id="idea-components" rows="6" class="w-full bg-gray-700 p-2 rounded"></textarea> 
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 py-1 px-4 rounded"> 
+                🔬 Deep Analysis 🔬 
+ 
+            </button> 
+            <p id="analysis-status" class="text-center hidden">Analyzing so deep...</p> 
+        </form> 
+ 
+        <form id="report-form" class="space-y-4 hidden mt-8"> 
+            <label for="idea-analysis" class="block">Detailed Analysis (Edit if necessary):</label> 
+            <textarea id="idea-analysis" rows="6" class="w-full bg-gray-700 p-2 rounded"></textarea> 
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 py-1 px-4 rounded"> 
+                📝 Generate Actionable Insights & Strategic Plan 📝 
+ 
+            </button> 
+            <p id="report-status" class="text-center hidden">Cooking up that report...</p> 
+        </form> 
+ 
+        <div id="output-section" class="mt-5"></div> 
+    </div> 
+ 
+    <script> 
+        // Your JavaScript code... 
+    </script> 
+</body> 
+ 
+</html> 
