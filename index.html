@@ -67,7 +67,113 @@
     </div> 
  
     <script> 
-        // Your JavaScript code... 
+        document.getElementById('idea-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const ideaDescription = document.getElementById('idea-description').value;
+            const substitutedPrompt = `The business idea is: "${ideaDescription}". Please extract the key components such as idea description, target market, revenue model, resources required, and potential challenges.`;
+            const apiUrl = `https://a.picoapps.xyz/ask-ai?prompt=${encodeURIComponent(substitutedPrompt)}`;
+            document.getElementById('idea-status').classList.remove('hidden');
+            document.getElementById('idea-status').textContent = "Breaking down like a mf...";
+            const response = await axios.get(apiUrl);
+            document.getElementById('idea-status').classList.add('hidden');
+            const ideaComponents = document.getElementById('idea-components');
+            ideaComponents.value = response.data.response;
+            document.getElementById('analysis-form').classList.remove('hidden');
+        });
+
+        document.getElementById('analysis-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const ideaComponents = document.getElementById('idea-components').value;
+            const substitutedPrompt = `Based on the idea components: "${ideaComponents}". Please provide a deep analysis on the competitive landscape, technical feasibility, regulatory environment, and operational structure.`;
+            const apiUrl = `https://a.picoapps.xyz/ask-ai?prompt=${encodeURIComponent(substitutedPrompt)}`;
+            document.getElementById('analysis-status').classList.remove('hidden');
+            document.getElementById('analysis-status').textContent = "Analyzing so deep...";
+            const response = await axios.get(apiUrl);
+            document.getElementById('analysis-status').classList.add('hidden');
+            const ideaAnalysis = document.getElementById('idea-analysis');
+            ideaAnalysis.value = response.data.response;
+            document.getElementById('report-form').classList.remove('hidden');
+        });
+
+        document.getElementById('report-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const ideaAnalysis = document.getElementById('idea-analysis').value;
+            const ideaDescription = document.getElementById('idea-description').value;
+            const substitutedPrompt = `Based on the deep analysis: "${ideaAnalysis}". Please provide actionable insights and a strategic planning, including a SWOT analysis, ROI projections, risk assessment, strategy outline, AI and automation recommendations, and a resourcing and scaling plan.`;
+            const apiUrl = `https://a.picoapps.xyz/ask-ai?prompt=${encodeURIComponent(substitutedPrompt)}`;
+            document.getElementById('report-status').classList.remove('hidden');
+            document.getElementById('report-status').textContent = "Cooking up that report...";
+            const response = await axios.get(apiUrl);
+            document.getElementById('report-status').classList.add('hidden');
+            const outputSection = document.getElementById('output-section');
+            outputSection.innerHTML = `
+                <div>
+                    <h2 class="text-3xl mb-5 text-white font-bold">Business Idea Report</h2>
+                    <pre class="bg-gray-700 text-white p-5 rounded">
+<strong>Short Summary of the Idea</strong>
+${ideaDescription}
+
+<strong>Detailed Analysis</strong>
+${ideaAnalysis}
+
+<strong>Actionable Insights & Strategic Plan</strong>
+${response.data.response}
+                    </pre>
+                    <button id="copy-button" class="bg-blue-500 hover:bg-blue-700 py-1 px-4 rounded">Copy to Clipboard</button>
+                </div>
+                <p class="text-center mt-4">Built by AgentOne 🤖</p>
+                <p class="text-center">Contact: agentone333@gmail.com for inquiries</p>
+            `;
+            document.getElementById('copy-button').addEventListener('click', () => {
+                const reportText = response.data.response;
+                navigator.clipboard.writeText(reportText)
+                    .then(() => {
+                        alert('Report copied to clipboard!');
+                    })
+                    .catch((error) => {
+                        console.error('Failed to copy report to clipboard:', error);
+                    });
+            });
+        });
+
+        async function sendToDatabase(reportText) {
+            const newRow = {
+                row: [
+                    document.getElementById('idea-description').value,
+                    document.getElementById('idea-components').value,
+                    document.getElementById('idea-analysis').value,
+                ],
+            };
+
+            try {
+                const response = await axios.post(
+                    'https://a.picoapps.xyz/db/create?app_id=metal-handcrafted&table_name=ideas',
+                    newRow,
+                    { headers: { 'Content-Type': 'application/json' } },
+                );
+
+                if (response.statusText === 'OK') {
+                    alert('Report sent to database successfully!')
+                } else {
+                    alert('Failed to send report to database.');
+                }
+
+            } catch (error) {
+                console.error('Failed to send report to database:', error);
+                alert('Failed to send report to database.');
+            }
+        }
+
+        document.getElementById('send-to-database-button').addEventListener('click', () => {
+            const ideaDescription = document.getElementById('idea-description').value;
+            const ideaComponents = document.getElementById('idea-components').value;
+            const ideaAnalysis = document.getElementById('idea-analysis').value;
+            sendToDatabase({
+              ideaDescription,
+              ideaComponents,
+              ideaAnalysis,
+            });
+        }); 
     </script> 
 </body> 
  
